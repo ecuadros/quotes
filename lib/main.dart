@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'quote.dart';
+import 'quote_card.dart';
+import 'config.dart';
 
 void main() {
   runApp(const MaterialApp(
     home: QuoteList(),
   ));
 }
-
-const Color mainColor = Colors.green;
 
 class QuoteList extends StatefulWidget {
   const QuoteList({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class QuoteList extends StatefulWidget {
 class _QuoteListState extends State<QuoteList> {
 
   List<Quote> quotes = [
-      Quote(text: 'This is my first text',
+      Quote(text: 'This is my first text abc',
             author: 'William'),
       Quote(text: 'In this line I am writing a very long text about the strike',
             author: 'Gabriel'),
@@ -30,15 +30,29 @@ class _QuoteListState extends State<QuoteList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: Config.mainColor,
       appBar: AppBar(
         title: const Text('Awesome title'),
         centerTitle: true,
-        backgroundColor: mainColor,
+        backgroundColor: Config.mainColor,
       ),
       body: Column(
-        children: quotes.map( (quote) => Text('${quote.author} - ${quote.text}') ).toList(),
+        children: quotes.map( (quote) => QuoteCard(
+            quote: quote,
+            delete: () {
+              setState(() {
+                quotes.remove(quote);
+              });
+            }
+        ) ).toList(),
       ),
+      // FloatingActionButton(
+      //   onPressed: () { },
+      //   backgroundColor: Colors.green,
+      //   child: const Icon(Icons.navigation),
+      // ),
     );
   }
 }
+
+
